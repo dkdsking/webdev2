@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Illinois Towing Data</title>
+        <style>
+            p, h1 {font-family: helvetica;}
+            p {font-size:1.5em;line-height:1.5em; margin-left: 24px;}
+            #map {
+                width:600px;
+                height:450px;
+            }
+        </style>
+    </head>
+    <body>
+    <h1>Illinois Towed Cars</h1>
+    <p>Get a pie chart about Illinois towed cars.</p>
+        <button id='findCar'>Find the Car</button>
+        <div id="results"></div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script>
+            
+        $(function() {
+            $('#findCar').click(function(){
+            
+                 // base URL to the food inspections data
+            var baseURL = 'https://data.cityofchicago.org/resource/ygr5-vcbg.json';
+            
+            // optional filters we're appending - status
+            var filters = "";
+            // full URL
+            var url = baseURL;
+            console.log(url);
+          
+                // jQuery command to retrieve json data
+                
+                $.getJSON(url).done (function (data) {
+                        // TODO:  add script to add data to the DOM
+                        console.log(data);
+                        
+                        var date = data[0].tow_date;
+                        var blk=0, whi = 0, gry = 0, sil = 0, grn = 0, blu = 0, red = 0, oth = 0;
+                        
+                        if (data.length < 1) {
+                            var errorMessage = "<p>" +"Hmm... looks like we couldn't find any data."+ "</p>";
+                            //$("#results").empty();
+                            //$("#results").append(errorMessage);
+                        } else {
+                            $.each(data, function(index, value) {
+                                if(value.tow_date == date){
+                                    var col = value.color;
+                                    if (col == "BLK")
+                                        blk++;
+                                    else if(col == "WHI")
+                                        whi++;
+                                    else if(col == "GRY")
+                                        gry++;
+                                    else if(col == "SIL")
+                                        sil++;
+                                    else if(col == "GRN")
+                                        grn++;
+                                    else if(col == "BLU")
+                                        blu++;
+                                    else if(col == "RED" || col == "MAR")
+                                        red++;
+                                    else
+                                        oth++;
+                                }
+                            })
+                        }
+                        
+                        google.charts.load('current', {'packages':['corechart']});
+                        
+                        google.charts.setOnLoadCallback(drawChart);
+                        
+                        function drawChart() {
+                
+                        // Create the data table.
+                        var data = new google.visualization.DataTable();
+                        data.addColumn('string', 'Car color');
+                        data.addColumn('number', 'Quantity');
+                        data.addRows([
+                            ['Black', blk],
+                            ['White', whi],
+                            ['Grey', gry],
+                            ['Silver', sil],
+                            ['Green', grn],
+                            ['Blue', blu],
+                            ['Red', red],
+                            ['Other', oth]
+                        ]);
+                
+                        // Set chart options
+                        var options = {'title':'Percentage of Cars Towed by Color ' + date,
+                                       'width':400,
+                                       'height':300};
+                
+                        // Instantiate and draw our chart, passing in some options.
+                        var chart = new google.visualization.PieChart(document.getElementById('results'));
+                        chart.draw(data, options);
+                      }
+    
+                    // loop through the records
+                });
+            });
+            
+        });   
+                    
+            
+        </script>
+        
+        
+        
+    </body>
+</html>
