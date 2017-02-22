@@ -7,7 +7,7 @@
     <h1>Click the button below to see a data breakdown of the most recent crimes in the Chicago Area.</h1>
     <button id="returnBuildings">Create the chart</button>
     <div id="results"></div>
-    <p>Note: There are 12 crime types included. Some crime types may not appear on the chart if none are listed in the data array.</p>
+    <p>Note: There are 12 crime types included, taken from the 1000 most recent crimes. Some crime types may not appear on the chart if none are listed in the data array.</p>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
@@ -20,7 +20,7 @@
             $.getJSON(url).done(function(data) {
                 console.log(data);
                 var crimeType = {ASSAULT:0,ROBBERY:0,CRIMINALDAMAGE:0,THEFT:0,CRIMINALTRESPASS:0,MOTORVEHICLETHEFT:0,BATTERY:0,
-                NARCOTICSi add *:0,BURGLARY:0,CRIMSEXUALASSAULT:0,WEAPONSVIOLATION:0,OTH:0}
+                NARCOTICS:0,BURGLARY:0,CRIMSEXUALASSAULT:0,WEAPONSVIOLATION:0,OTH:0}
                 
                 $.each(data, function(index, value) {
                     var crm = value.primary_type;
@@ -61,20 +61,46 @@
                         var data = new google.visualization.DataTable();
                         data.addColumn('string', 'Crime Type');
                         data.addColumn('number', 'Quantity');
-                        data.addRows([
-                            ['ASSAULT', crimeType.ASSAULT],
-                            ['ROBBERY', crimeType.ROBBERY],
-                            //['CRIMINAL DAMAGE', crimeType.CRIMINALDAMAGE],
-                            //['THEFT', crimeType.THEFT],
-                            //['CRIMINAL TRESSPASS', crimeType.CRIMINALTRESPASS],
-                            //['MOTOR VEHICLE THEFT', crimeType.MOTORVEHICLETHEFT],
-                            //['BATTERY', crimeType.BATTERY],
-                            //['NARCOTICS', crimeType.NARCOTICS]
-                            //['BURGLARY', crimeType.BURGLARY]
-                            //['CRIMINAL SEXUAL ASSAULT', crimeType.CRIMSEXUALASSAULT]
-                            //['WEAPONS VIOLATION', crimeType.WEAPONSVIOLATION]
-                            //['OTHER', crimeType.OTH]
-                        ]);
+                        if(crimeType.ASSAULT > 0) {
+                            data.addRows([['ASSAULT', crimeType.ASSAULT]]);
+                        }
+                        if(crimeType.ROBBERY > 0) {
+                            data.addRows([['ROBBERY', crimeType.ROBBERY]]);
+                        }   
+                        if(crimeType.CRIMINALDAMAGE > 0) {
+                            data.addRows([['CRIMINAL DAMAGE', crimeType.CRIMINALDAMAGE]]);
+                        }
+                        if(crimeType.THEFT > 0) {
+                            data.addRows([['THEFT', crimeType.THEFT]]);
+                        }
+                        if(crimeType.CRIMINALTRESPASS > 0) {
+                            data.addRows([['CRIMINAL TRESSPASS', crimeType.CRIMINALTRESPASS]]);
+                        } 
+                        if(crimeType.MOTORVEHICLETHEFT > 0) {
+                            data.addRows([['MOTOR VEHICLE THEFT', crimeType.MOTORVEHICLETHEFT]]);
+                        }    
+                        if(crimeType.BATTERY > 0) {
+                            data.addRows([['BATTERY', crimeType.BATTERY]]);
+                        } 
+                        if(crimeType.NARCOTICS > 0) {
+                            data.addRows([['NARCOTICS', crimeType.NARCOTICS]]);
+                        }   
+                        if(crimeType.BURGLARY > 0) {
+                            data.addRows([['BURGLARY', crimeType.BURGLARY]]);
+                        } 
+                        if(crimeType.CRIMSEXUALASSAULT > 0) {
+                            data.addRows([['CRIMINAL SEXUAL ASSAULT', crimeType.CRIMSEXUALASSAULT]]);
+                        }      
+                        if(crimeType.CRIMSEXUALASSAULT > 0) {
+                            data.addRows([['CRIMINAL SEXUAL ASSAULT', crimeType.CRIMSEXUALASSAULT]]);
+                        } 
+                        if(crimeType.WEAPONSVIOLATION > 0) {
+                            data.addRows([['WEAPONS VIOLATION', crimeType.WEAPONSVIOLATION]]);
+                        }
+                        if(crimeType.OTH > 0) {
+                            data.addRows([['OTHER', crimeType.OTH]]);
+                        } 
+                            
                 
                         // Set chart options
                         var options = {'title':'Breakdown of most recent crimes in Chicago',
