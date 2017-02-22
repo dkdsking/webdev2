@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chicago Crimes Google Chart </title>
+    </head>
+    <body>
+    <h1>Click the button below to see a data breakdown of the most recent crimes in the Chicago Area.</h1>
+    <button id="returnBuildings">Create the chart</button>
+    <div id="results"></div>
+    <p>Note: There are 12 crime types included. Some crime types may not appear on the chart if none are listed in the data array.</p>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+    
+    $(function() {
+        $("#returnBuildings").click(function() {
+            var url = "https://data.cityofchicago.org/resource/6zsd-86xi.json";
+            console.log(url);
+            
+            $.getJSON(url).done(function(data) {
+                console.log(data);
+                var crimeType = {ASSAULT:0,ROBBERY:0,CRIMINALDAMAGE:0,THEFT:0,CRIMINALTRESPASS:0,MOTORVEHICLETHEFT:0,BATTERY:0,
+                NARCOTICSi add *:0,BURGLARY:0,CRIMSEXUALASSAULT:0,WEAPONSVIOLATION:0,OTH:0}
+                
+                $.each(data, function(index, value) {
+                    var crm = value.primary_type;
+                    if (crm =="ASSAULT") 
+                        crimeType.ASSAULT++;
+                    else if (crm = "ROBBERY")
+                        crimeType.ROBBERY++;
+                    else if (crm = "CRIMINAL DAMAGE")
+                        crimeType.CRIMINALDAMAGE++;
+                    else if (crm = "THEFT")
+                        crimeType.THEFT++;
+                    else if (crm = "CRIMINAL TRESSPASS")
+                        crimeType.CRIMINALTRESPASS++;
+                    else if (crm = "MOTOR VEHICLE THEFT")
+                        crimeType.MOTORVEHICLETHEFT++;
+                    else if (crm = "BATTERY")
+                        crimeType.BATTERY++;
+                    else if (crm = "NARCOTICS")
+                        crimeType.NARCOTICS++;
+                    else if (crm = "BURGLARY")
+                        crimeType.BURGLARY++;
+                    else if (crm = "CRIM SEXUAL ASSAULT")
+                        crimeType.CRIMSEXUALASSAULT++;
+                    else if (crm = "WEAPONS VIOLATION")
+                        crimeType.WEAPONSVIOLATION++;
+                    else 
+                        crimeType.OTH++;
+                });
+                
+                console.log(crimeType)
+                google.charts.load('current', {'packages':['corechart']});
+                        
+                google.charts.setOnLoadCallback(drawChart);
+                
+                function drawChart() {
+                
+                        // Create the data table.
+                        var data = new google.visualization.DataTable();
+                        data.addColumn('string', 'Crime Type');
+                        data.addColumn('number', 'Quantity');
+                        data.addRows([
+                            ['ASSAULT', crimeType.ASSAULT],
+                            ['ROBBERY', crimeType.ROBBERY],
+                            //['CRIMINAL DAMAGE', crimeType.CRIMINALDAMAGE],
+                            //['THEFT', crimeType.THEFT],
+                            //['CRIMINAL TRESSPASS', crimeType.CRIMINALTRESPASS],
+                            //['MOTOR VEHICLE THEFT', crimeType.MOTORVEHICLETHEFT],
+                            //['BATTERY', crimeType.BATTERY],
+                            //['NARCOTICS', crimeType.NARCOTICS]
+                            //['BURGLARY', crimeType.BURGLARY]
+                            //['CRIMINAL SEXUAL ASSAULT', crimeType.CRIMSEXUALASSAULT]
+                            //['WEAPONS VIOLATION', crimeType.WEAPONSVIOLATION]
+                            //['OTHER', crimeType.OTH]
+                        ]);
+                
+                        // Set chart options
+                        var options = {'title':'Breakdown of most recent crimes in Chicago',
+                                       'width':400,
+                                       'height':300};
+                
+                        // Instantiate and draw our chart, passing in some options.
+                        var chart = new google.visualization.PieChart(document.getElementById('results'));
+                        chart.draw(data, options);
+                }
+            });
+        });
+    });
+    </script>
+    </body>
+</html>
