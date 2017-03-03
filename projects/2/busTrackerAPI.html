@@ -10,8 +10,8 @@
       font-family: "Mada", sans-serif;
       background-color: #03A9F4;
     }
-    #trackerMenu {
-      
+    span {
+      font-size: 22px;
     }
     #resultsDiv {
       border: 5px solid #1976D2;
@@ -70,7 +70,7 @@
                 $.each (data["bustime-response"]["prd"], function(index,value) {
                     var prediction = value.prdctdn;
                     if (prediction !== "DLY" && prediction !=="DUE" ) {
-                      minuteString = " minutes";
+                      minuteString = " MINUTES";
                       var predictionNum = prediction.toString();
                       var prediction = prediction.concat(minuteString);
                     }
@@ -83,7 +83,7 @@
                     } else {
                       var delayIf = "NOPE"
                     }
-                    var html = "<div id='resultsDiv'>" + "<p>Stop name: " + value.stpnm + "</p>" + "<p>Bus arrival time: " + prediction + " </p>" + 
+                    var html = "<div id='resultsDiv'>" + "<p>Stop name: " + value.stpnm + "</p>" + "<p>Bus arrival time: " + "<span>" + prediction + "</span>" + " </p>" + 
                     "<p>Route direction: " + value.rtdir + "</p>" + "<p> Delay: " + delayIf + "</p>" + "</div>";
                     
                     $("#results").append(html);
