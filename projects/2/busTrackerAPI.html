@@ -10,8 +10,12 @@
       font-family: "Mada", sans-serif;
       background-color: #03A9F4;
     }
+    #trackerMenu {
+      
+    }
     #resultsDiv {
       border: 5px solid #1976D2;
+      
       margin-top: 5px;
       padding: 5px;
       width: 25%;
@@ -20,8 +24,8 @@
 </head>
 <body>
   <h1>CTA BUS TRACKER</h1>
-  <p>Select one of the bus routes below to get it's bus tracker predictions.<br>This app uses real-time data, so click the button again to get 
-  the most current predictions.</p>
+  <p>Select one of the bus routes below to get it's bus tracker predictions.<br>This app uses real-time data, 
+  so <strong>click the button again</strong> to refresh the page.</p>
   
 
   
@@ -74,7 +78,7 @@
                       var prediction = "DELAYED";
                     }
                     var delayIf = value.dly;
-                    if (delayIf !== true) {
+                    if (delayIf == true) {
                       var delayIf = "YEAH THERE IS SORRY"
                     } else {
                       var delayIf = "NOPE"
