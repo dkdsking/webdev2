@@ -15,17 +15,23 @@
       text-decoration:none;
     }
     a:hover {
-      color: #0D47A1;
+      color: #303F9F;
       text-decoration:none;
     }
     span {
       font-size: 22px;
     }
+    #resultsEnclose {
+      width: 20%;
+    }
+    .centered {
+      padding-left: 14.5%;
+    }
     #resultsDiv {
       border: 5px solid #1565C0;
       margin-top: 5px;
       padding: 10px 22px 10px 22px;
-      width: 19%;
+      width: 95%;
     }
   </style>
 </head>
@@ -44,9 +50,10 @@
   </select>
   
   <button id="getPredictions">Get the CTA predictions</button>
-  
+  <div id="resultsEnclose">
   <div id="resultsHeader"></div>
   <div id="results"></div>
+  </div>
       
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script>
@@ -72,7 +79,7 @@
                         "stpid": stpID}
               }).done (function (data) {
                 console.log(data);
-                $("#resultsHeader").append("<h1>Bus Predictions</h1>");
+                $("#resultsHeader").append("<h1 class='centered'>Bus Predictions</h1>");
                
                 $.each (data["bustime-response"]["prd"], function(index,value) {
                     var prediction = value.prdctdn;
