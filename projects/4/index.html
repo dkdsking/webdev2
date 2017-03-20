@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>3 Screen App </title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <style>
+            .screen {
+                display: none;
+            }
+            #screen1 {
+              margin: 10px 30px;
+            }
+            #screen2 {
+              margin: 10px 30px;
+            }
+            #screen3 {
+              margin: 10px 30px;
+            }
+            
+        </style>
+        <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    </head>
+    <body>
+        <!-- Always shows a header, even in smaller screens. -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <!-- Title -->
+          <span class="mdl-layout-title">Title</span>
+          <!-- Add spacer, to align navigation to the right -->
+          <div class="mdl-layout-spacer"></div>
+          <!-- Navigation. We hide it in small screens. -->
+          <nav class="mdl-navigation mdl-layout--large-screen-only">
+            <a class="mdl-navigation__link" href="#" id="topLink1">Link 1</a>
+            <a class="mdl-navigation__link" href="#" id="topLink2">Link 2</a>
+            <a class="mdl-navigation__link" href="#" id="topLink3">Link 3</a>
+          </nav>
+        </div>
+      </header>
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">Title</span>
+        <nav class="mdl-navigation">
+          <a id="link1"class="mdl-navigation__link" href="#">Link 1</a>
+          <a id="link2"class="mdl-navigation__link" href="#">Link 2</a>
+          <a id="link3"class="mdl-navigation__link" href="#">Link 3</a>
+        </nav>
+      </div>
+      <main class="mdl-layout__content">
+        <div class="screen page-content" id = "screen1">
+          <!-- Colored raised button -->
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="getWeather">Get Weather for Chicago</button>
+            <br>
+          <!-- Simple Textfield -->
+          <div id="textInput">
+            <div class="mdl-textfield mdl-js-textfield" id="textInput1">
+              <input class="mdl-textfield__input" type="text" id="remindInput">
+              <label class="mdl-textfield__label" for="sample1">Type Here...</label>
+            </div>
+           
+            
+          </div>
+
+        </div>
+        <div class="screen page-content" id = "screen2">Screen 2</div>
+        <div class="screen page-content" id = "screen3">Screen 3</div>
+      </main>
+    </div>
+    <script>
+        $("#getWeather").click(function() {
+          var apiPassThruUrl="https://polar-garden-75406.herokuapp.com/apiPassThru.php";
+          
+          var apiEndpoint= "http://api.openweathermap.org/data/2.5/forecast/daily?q=Chicago&units=metric&cnt=7&";
+          $.ajax({
+            url: apiPassThruUrl,
+            dataType: "json",
+            method: 'GET',
+            data: {"apiEndpoint": apiEndpoint,
+                   "APPID" : "3f137b7f22ff877d8d6bc61821fc7273"}
+          }).done(function(data) {
+            console.log(apiEndpoint);
+            console.log(data);
+          })
+        })
+        $(function() {
+          $("#link1").on("click",function() {
+              $(".screen").hide();
+              $("#screen1").show(); 
+          })
+          $("#topLink1").on("click",function() {
+              $(".screen").hide();
+              $("#screen1").show(); 
+          })
+          $("#link2").on("click",function() {
+              $(".screen").hide();
+              $("#screen2").show(); 
+          })
+          $("#topLink2").on("click",function() {
+              $(".screen").hide();
+              $("#screen2").show(); 
+          })
+          $("#link3").on("click",function() {
+              $(".screen").hide();
+              $("#screen3").show(); 
+          })
+          $("#topLink3").on("click",function() {
+              $(".screen").hide();
+              $("#screen3").show(); 
+          })
+          $("#addInput").click(function() {
+            $("#textInput").prependTo("#screen1");
+            $("textInput").show();
+          })
+        })
+        //API key:3f137b7f22ff877d8d6bc61821fc7273
+        //Google Maps API Key:AIzaSyAK2b-wZQMNQqgS2uo7kNP-UdNRNZVXHMU
+    </script>
+    </body>
+</html>
