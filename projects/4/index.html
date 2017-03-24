@@ -4,19 +4,30 @@
         <title>3 Screen App </title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <style>
             .screen {
                 display: none;
             }
             #screen1 {
-              margin: 10px 30px;
+              margin: 30px 30px;
             }
             #screen2 {
-              margin: 10px 30px;
+              margin: 30px 30px;
             }
             #screen3 {
-              margin: 10px 30px;
+              margin: 30px 30px;
+            }
+            #resultsTable {
+              width:50%;
+              height: 90%;
+            }
+            .demo-list-three {
+              width: 650px;
+            }
+            #clothesList {
+              margin: -17px;
             }
             
         </style>
@@ -33,42 +44,59 @@
           <div class="mdl-layout-spacer"></div>
           <!-- Navigation. We hide it in small screens. -->
           <nav class="mdl-navigation mdl-layout--large-screen-only">
-            <a class="mdl-navigation__link" href="#" id="topLink1">Link 1</a>
-            <a class="mdl-navigation__link" href="#" id="topLink2">Link 2</a>
-            <a class="mdl-navigation__link" href="#" id="topLink3">Link 3</a>
+            <a class="mdl-navigation__link" href="#" id="topLink1">Get Weather</a>
+            <a class="mdl-navigation__link" href="#" id="topLink2">Weather Forecast</a>
+            <a class="mdl-navigation__link" href="#" id="topLink3">Suggested Clothing</a>
           </nav>
         </div>
       </header>
       <div class="mdl-layout__drawer">
         <span class="mdl-layout-title">Title</span>
         <nav class="mdl-navigation">
-          <a id="link1"class="mdl-navigation__link" href="#">Link 1</a>
-          <a id="link2"class="mdl-navigation__link" href="#">Link 2</a>
-          <a id="link3"class="mdl-navigation__link" href="#">Link 3</a>
+          <a id="link1"class="mdl-navigation__link" href="#">Get Weather</a>
+          <a id="link2"class="mdl-navigation__link" href="#">Weather Forecast</a>
+          <a id="link3"class="mdl-navigation__link" href="#">Suggested Clothing</a>
         </nav>
       </div>
       <main class="mdl-layout__content">
         <div class="screen page-content" id = "screen1">
+            <p>Want to get the Chicago weather forecast for the next week? Click the button below!</p>
           <!-- Colored raised button -->
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="getWeather">Get Weather for Chicago</button>
-            <br>
-          <!-- Simple Textfield -->
-          <div id="textInput">
-            <div class="mdl-textfield mdl-js-textfield" id="textInput1">
-              <input class="mdl-textfield__input" type="text" id="remindInput">
-              <label class="mdl-textfield__label" for="sample1">Type Here...</label>
-            </div>
-           
-            
-          </div>
-
+            <a href="#"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="getWeather">Get Weather for Chicago</button></a>
         </div>
-        <div class="screen page-content" id = "screen2">Screen 2</div>
-        <div class="screen page-content" id = "screen3">Screen 3</div>
+        <div class="screen page-content" id = "screen2">
+          <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" id="resultsTable">
+            <thead>
+              <tr>
+                <th class="mdl-data-table__cell--non-numeric">Date</th>
+                <th>High Temp</th>
+                <th>Low Temp</th>
+                <th>Day Temp</th>
+                <th>Night Temp</th>
+                <th>Clouds</th>
+                <th>Humidity</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody id="resultsBody">
+            </tbody>
+          </table>
+          <div id="screen2Caption"></div>
+        </div>
+        
+        <div class="screen page-content" id = "screen3">
+          <div id="screen3Disclaimer"></div>
+          <ul class="demo-list-three mdl-list" id="clothesList">
+          </ul>
+        </div>
       </main>
     </div>
     <script>
         $("#getWeather").click(function() {
+          $("#resultsBody").empty();
+          $("#clothesList").empty();
+          $("#screen2Caption").empty();
+          $("#screen3Disclaimer").empty();
           var apiPassThruUrl="https://polar-garden-75406.herokuapp.com/apiPassThru.php";
           
           var apiEndpoint= "http://api.openweathermap.org/data/2.5/forecast/daily?q=Chicago&units=metric&cnt=7&";
@@ -81,9 +109,81 @@
           }).done(function(data) {
             console.log(apiEndpoint);
             console.log(data);
+            
+            $.each(data.list, function(index, value) {
+              var rawDate = 	new Date(value.dt*1000).toString();
+              var date = rawDate.substring(0,15);
+              var fahrTempHigh = Math.round((value.temp.max * 1.8) + 32);
+              var fahrTempLow = Math.round((value.temp.min * 1.8) + 32);
+              var fahrTempDay = Math.round((value.temp.day * 1.8) + 32);
+              var fahrTempNight = Math.round((value.temp.eve * 1.8) + 32);
+              var html = "<tr>" +"<td>"+date+"</td>"+ "<td>" +fahrTempHigh  +"<span>&#8457" +"</span>" 
+              + "</td>" +"<td>" +fahrTempLow+"<span>&#8457" +"</span>"+"</td>"+ "<td>" + 
+              fahrTempDay  +"<span>&#8457" +"</span>" +"</td>"
+              +"<td>" +fahrTempNight+"<span>&#8457" +"</span>" +  "</td>"
+              + "<td>" + value.clouds + "%"+ "</td>"+ "<td>" + value.humidity +"%"+ "</td>"
+              + "<td>" + value["weather"]["0"]["description"] + "</td>"+"</tr>";
+              $("#resultsBody").append(html);
+              var description = value["weather"]["0"]["description"];
+              if (description.indexOf("rain")>-1) {
+                var rainJacket = "Rain Jacket and/or Umbrella"
+              } else{
+                var rainJacket = "";
+              }
+              if (fahrTempHigh <= 30) {
+                var coat = "Winter Coat and Hat"
+              } else if(fahrTempHigh > 30 && fahrTempHigh <=60) {
+                var coat = "Light Jacket"
+              } else {
+                var coat = "";
+              }
+              if (fahrTempDay <= 30) {
+                var clothes = "Long-Sleeved Shirt/ Long Pants";
+              } else if(fahrTempDay > 30 && fahrTempDay <=60 ) {
+                var clothes = "Long Pants";
+              } else {
+                var clothes = "Short-Sleeved Shirt and/or Pants"
+              }
+              var list = "";
+              if (coat !== "") {
+                list += ", " +coat;
+              }
+              if (rainJacket !=="") {
+                list += ", " + rainJacket;
+              }
+              if(clothes !=="") {
+                list +=", " + clothes;
+              }
+              var xlist = list[0];
+              console.log(xlist);
+              if (xlist == ",") {
+                var newList = list.slice(2);
+              } else {
+                var newList = list;
+              }
+              
+              var weatherList = "<li class='mdl-list__item mdl-list__item--three-line'>"+
+              "<span class='mdl-list__item-primary-content'>"+
+              "<span>"+date+"</span>"+ "<span class=mdl-list__item-text-body>"+
+              
+                newList + 
+              "</span>"+"</span>"+"</li>";
+              $("#clothesList").append(weatherList);
+            })
+            var caption = "<br><p>This is the Chicago weather forecast for the next week.<br><br>Want to see suggested jackets/clothing for the next seven days? Click the 'Suggested Clothing' link above!</p>" ;
+            $("#screen2Caption").append(caption);
+            var disclaimer = "<p>NOTE: These are just suggestions for garments to bring on these days. What " + 
+            "clothes you may actually want to bring depends on your specific needs.</p>"
+            $("#screen3Disclaimer").append(disclaimer);
           })
+          $(".screen").hide();
+          $("#screen2").show();
         })
         $(function() {
+          $(document).ready(function() {
+            $(".screen").hide();
+            $("#screen1").show();
+          });
           $("#link1").on("click",function() {
               $(".screen").hide();
               $("#screen1").show(); 
