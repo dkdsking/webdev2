@@ -188,7 +188,6 @@
                 list +=", " + clothes;
               }
               var xlist = list[0];
-              console.log(xlist);
               if (xlist == ",") {
                 var newList = list.slice(2);
               } else {
@@ -198,8 +197,7 @@
               var weatherList = "<li class='mdl-list__item mdl-list__item--three-line'>"+
               "<span class='mdl-list__item-primary-content'>"+
               "<span>"+date+"</span>"+ "<span class=mdl-list__item-text-body>"+
-              
-                newList + 
+              newList + 
               "</span>"+"</span>"+"</li>";
               $("#clothesList").append(weatherList);
             })
