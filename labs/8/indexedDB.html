@@ -26,8 +26,8 @@
       </div>
       <!-- Tabs -->
       <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-        <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Tab 1</a>
-        <a href="#fixed-tab-2" class="mdl-layout__tab">Tab 2</a>
+        <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Search Employees</a>
+        <a href="#fixed-tab-2" class="mdl-layout__tab">Add Employee</a>
         <a href="#fixed-tab-3" class="mdl-layout__tab">Tab 3</a>
       </div>
     </header>
@@ -41,7 +41,7 @@
           <h5>Get a List of Current Chicago City Council Employees</h5>
           <div class="mdl-textfield mdl-js-textfield">
             <input class="mdl-textfield__input" type="text" id="searchInput">
-            <label class="mdl-textfield__label" for="sample1">Text...</label>
+            <label class="mdl-textfield__label" for="sample1">Enter Name Here...</label>
           </div>
           <br>
           <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="getDB">City Council Employees</button>
@@ -54,7 +54,28 @@
       </section>
       <section class="mdl-layout__tab-panel" id="fixed-tab-2">
         <div class="page-content">
-          <!-- Your content goes here -->
+          <h5>Think we missed an employee? Add them here!</h5>
+          <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" id="employeeName">
+            <label class="mdl-textfield__label" for="sample1">Name...</label>
+          </div>
+          <br>
+          <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" id="employeeDepartment">
+            <label class="mdl-textfield__label" for="sample1">Department...</label>
+          </div>
+          <br>
+          <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" id="employeeTitle">
+            <label class="mdl-textfield__label" for="sample1">Title...</label>
+          </div>
+          <br>
+          <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" id="employeeSalary">
+            <label class="mdl-textfield__label" for="sample1">Salary...</label>
+          </div>
+          <br>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="addEmployee">Add An Employee</button>
         </div>
       </section>
       <section class="mdl-layout__tab-panel" id="fixed-tab-3">
@@ -92,6 +113,7 @@
               })
             }
           })
+          
           db.employees.where("name").startsWithIgnoreCase($("#searchInput").val()).each(function(employees, value) {
             console.log(employees.name);
             console.log(employees.department);
@@ -103,15 +125,25 @@
               "</span>" +
               "</li>"
             $("#results").append(html);
-          })
-          if ($('#results').text() == '') {
-              $("#results").append("<li class='mdl-list__item'><span class='mdl-list__item-primary-content'>" +
+          }).catch ("NotFoundError", function (error) {
+            console.error(error);
+            $("#results").append("<li class='mdl-list__item'><span class='mdl-list__item-primary-content'>" +
               "Sorry, no information was found for that search."+"</span></li>");
-          }
-        	
+          })
         })
     })
-    
+    $("#addEmployee").click(function() {
+      db.employees.add({
+        name: $("#employeeName").val(),
+        department: $("#employeeDepartment").val(),
+        title: $("#employeeTitle").val(),
+        salary: $("#employeeSalary").val(),
+      })
+      $("#employeeName").val('');
+      $("#employeeDepartment").val('');
+      $("#employeeTitle").val('');
+      $("#employeeSalary").val('');
+    })
   </script>
 </body>
 
