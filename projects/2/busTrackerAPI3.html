@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>3 Screen App </title>
   <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
@@ -16,12 +17,14 @@
     body {
       font-family: "Roboto", sans-serif;
     }
+    
     @media screen and (max-width: 951px) {
       .raisedMargin {
         margin-bottom: 2%;
         display: block;
       }
     }
+    
     @media screen and (max-width: 420px) {
       .centeredText {
         text-align: center;
@@ -49,13 +52,15 @@
         line-height: initial;
         /* New content takes up original line height */
       }
-      .customizeRoute, .customizeRoute1 {
+      .customizeRoute,
+      .customizeRoute1 {
         font-size: 20px;
         line-height: 150%;
         margin: 0 auto;
         text-align: center;
       }
     }
+    
     @media screen and (max-width: 320px) {
       .tinyText {
         text-indent: -9999px;
@@ -71,24 +76,30 @@
         /* New content takes up original line height */
       }
     }
+    
     .screen {
       padding-left: 2%;
       width: 96%;
     }
+    
     .boldText {
       font-weight: bold;
     }
+    
     .blueHr {
       background-color: rgb(63, 81, 181);
       border-top: 3px double rgb(63, 81, 181)
     }
+    
     .invisible {
       display: none;
     }
+    
     .addedBus {
       display: block;
       margin-top: 0.5%;
     }
+    
     .bold {
       font-weight: bold;
     }
@@ -127,48 +138,48 @@
       <div class="screen page-content" id="screen1">
         <h3 class="centeredText tinyText">Western and Addison Bus Tracker</h3>
         <h4>Hey, Lane Tech students! Do you ride a Western or Addison bus to commute? If so, click the "Bus Tracker" link above to get real-time bus arrival predictions for your stop.</h4>
-        <h4>If you want arrival times for other stops, you can use the "Customize" tabs to create your own bus trackers!</h4>      
+        <h4>If you want arrival times for other stops, you can use the "Customize" tabs to create your own bus trackers!</h4>
       </div>
       <div class="screen page-content" id="screen2">
         <h3 class="centeredText mobileContent">Get the CTA Bus Arrival Times</h3>
         <h4>Click a button below to display the bus arrival predictions for that route.
           <br>Note: These four buttons are for the four Western/Addison intersection stops.</h4>
-        
-          <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored raisedMargin centeredDiv trackerPrim" id="8417">
+
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored raisedMargin centeredDiv trackerPrim" id="8417">
         Northbound 49/X49 Western
       </button>
-          <!-- Colored raised button -->
-          <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored raisedMargin centeredDiv trackerPrim" id="8195">
+        <!-- Colored raised button -->
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored raisedMargin centeredDiv trackerPrim" id="8195">
         Southbound 49/X49 Western
       </button>
-          <!-- Colored raised button -->
-          <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored raisedMargin centeredDiv trackerPrim1" id="12527">
+        <!-- Colored raised button -->
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored raisedMargin centeredDiv trackerPrim1" id="12527">
           Eastbound 152 Addison  
       </button>
-          <!-- Colored raised button -->
-          <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored raisedMargin centeredDiv trackerPrim1" id="12569">
+        <!-- Colored raised button -->
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored raisedMargin centeredDiv trackerPrim1" id="12569">
           Westbound 152 Addison  
       </button>
-      <div id="buttons">
-      <hr><h4>Customized Stops</h4>
-      </div>
-      <hr>
-      <div id="results"></div>
+        <hr>
+        <h4>Customized Stops</h4>
+        <div id="buttons">
+          <p id="noTrackers">You haven't added any customized trackers.</p>
+        </div>
+        <hr>
+        <div id="results"></div>
       </div>
       <div class="screen page-content" id="screen3">
         <h3 class="centeredText">Customize (North + East bound)</h3>
         <h4>Step 1: Click one of the routes below to create your own bus tracker button.
-        <br> Step 2: Select one of the stop IDs and click "Add". <br> Step 3: Check the "Bus Tracker" page to see if your tracker is there. 
-        The new tracker should be saved even when you refresh the page.
-        <br><span class = "bold">Note: Use these routes to create trackers for North and East bound bus routes.<span></span></h4>
-        
+          <br> Step 2: Select one of the stop IDs and click "Add". <br> Step 3: Check the "Bus Tracker" page to see if your tracker is there. The new tracker should be saved even when you refresh the page.
+          <br><span class="bold">Note: Use these routes to create trackers for North and East bound bus routes.<span></span></h4>
+
       </div>
       <div class="screen page-content" id="screen4">
         <h3 class="centeredText">Customize (South + West bound)</h3>
         <h4>Step 1: Click one of the routes below to create your own bus tracker button.
-        <br> Step 2: Select one of the stop IDs and click "Add". <br> Step 3: Check the "Bus Tracker" page to see if your tracker is there. 
-        The new tracker should be saved even when you refresh the page.
-        <br><span class = "bold">Note: Use these routes to create trackers for South and West bound bus routes.</span></h4>
+          <br> Step 2: Select one of the stop IDs and click "Add". <br> Step 3: Check the "Bus Tracker" page to see if your tracker is there. The new tracker should be saved even when you refresh the page.
+          <br><span class="bold">Note: Use these routes to create trackers for South and West bound bus routes.</span></h4>
       </div>
     </main>
   </div>
@@ -290,9 +301,10 @@
                   })
                   getmdlSelect.init(".getmdl-select")
                   $("#addStop").click(function() {
+                    $("#noTrackers").remove();
                     var id = $("#sample1").val();
                     var id2 = id.split("ID: ")[1];
-                    var realid = id2.substring(0, id2.length-1);
+                    var realid = id2.substring(0, id2.length - 1);
                     var stpnm = id.substring(0, id.length - 16);
                     db.stops.add({
                       name: realid,
@@ -301,9 +313,9 @@
                       rtdir: direction
                     })
                     var button = "<button class='mdl-button mdl-js-button mdl-button--raised mdl-button--colored raisedMargin centeredDiv1 addedBus trackerPrim1' id=" +
-                                  realid + ">" +
-                                  text + " - " + stpnm + " (" + direction + ")" +
-                                  "</button>";
+                      realid + ">" +
+                      text + " - " + stpnm + " (" + direction + ")" +
+                      "</button>";
                     $("#buttons").append(button);
                     $("#" + realid).click(function() {
                       $("#results").empty();
@@ -323,8 +335,9 @@
                       }).done(function(data) {
                         console.log(data);
                         if (data["bustime-response"]["error"] !== undefined) {
-                          $("#results").append("Sorry, no information was found. There may be no buses scheduled in the near future for this route. CTA's fault, not mine.");
-                        } else {
+                          $("#results").append("Sorry, no information was found. There may be no buses scheduled in the near future for this route.");
+                        }
+                        else {
                           $("#results").append("<h4>Bus Predictions</h4>" + "<p class='boldText'> Stop name: " + data["bustime-response"]["prd"][0].stpnm + "</p>" +
                             "<p class='boldText'>Route direction: " + data["bustime-response"]["prd"][0].rtdir + "</p>" + "<hr class='blueHr'>");
                           $.each(data["bustime-response"]["prd"], function(index, value) {
@@ -341,6 +354,7 @@
                         }
                       });
                     });
+                    $("#input").remove();
                   })
                 })
               })
@@ -405,9 +419,10 @@
                   })
                   getmdlSelect.init(".getmdl-select")
                   $("#addStop").click(function() {
+                    $("#noTrackers").remove();
                     var id = $("#sample1").val();
                     var id2 = id.split("ID: ")[1];
-                    var realid = id2.substring(0, id2.length-1);
+                    var realid = id2.substring(0, id2.length - 1);
                     var stpnm = id.substring(0, id.length - 16);
                     console.log(realid);
                     db.stops.add({
@@ -417,9 +432,9 @@
                       rtdir: direction
                     })
                     var button = "<button class='mdl-button mdl-js-button mdl-button--raised mdl-button--colored raisedMargin centeredDiv1 addedBus trackerPrim1' id=" +
-                                  realid + ">" +
-                                  text + " - " + stpnm + " (" + direction + ")" +
-                                  "</button>";
+                      realid + ">" +
+                      text + " - " + stpnm + " (" + direction + ")" +
+                      "</button>";
                     $("#buttons").append(button);
                     $("#" + realid).click(function() {
                       $("#results").empty();
@@ -439,8 +454,9 @@
                       }).done(function(data) {
                         console.log(data);
                         if (data["bustime-response"]["error"] !== undefined) {
-                          $("#results").append("Sorry, no information was found. There may be no buses scheduled in the near future for this route. CTA's fault, not mine.");
-                        } else {
+                          $("#results").append("Sorry, no information was found. There may be no buses scheduled in the near future for this route.");
+                        }
+                        else {
                           $("#results").append("<h4>Bus Predictions</h4>" + "<p class='boldText'> Stop name: " + data["bustime-response"]["prd"][0].stpnm + "</p>" +
                             "<p class='boldText'>Route direction: " + data["bustime-response"]["prd"][0].rtdir + "</p>" + "<hr class='blueHr'>");
                           $.each(data["bustime-response"]["prd"], function(index, value) {
@@ -457,6 +473,7 @@
                         }
                       });
                     });
+                    $("#input1").remove();
                   })
                 })
               })
@@ -466,51 +483,58 @@
       });
     });
     db.stops.each(function(stops, value) {
-      var stopid1 = stops.name;
-      var rtnm1 = stops.rtnm;
-      var name1 = stops.stopid;
-      var rtdir = stops.rtdir;
-      var html4 = "<button class='mdl-button mdl-js-button mdl-button--raised mdl-button--colored raisedMargin centeredDiv1 addedBus' id=" +
-        stopid1 + ">" +
-        rtnm1 + " - " + name1 + " (" + rtdir + ")" +
-        "</button>";
-      $("#buttons").append(html4);
-      $("#" + stopid1).click(function() {
-        $("#results").empty();
-        var id = this.id;
-        var apiPassThruUrl = "https://polar-garden-75406.herokuapp.com/apiPassThru.php";
-        var apiEndpoint = "http://www.ctabustracker.com/bustime/api/v2/getpredictions";
-        $.ajax({
-          url: apiPassThruUrl,
-          dataType: "json",
-          method: 'GET',
-          data: {
-            "apiEndpoint": apiEndpoint,
-            "key": "YubEefJ33AeRRyxbmYBbgN2QH",
-            "format": "json",
-            "stpid": id
-          }
-        }).done(function(data) {
-          console.log(data);
-          if (data["bustime-response"]["error"] !== undefined) {
-            $("#results").append("Sorry, no information was found. There may be no buses scheduled in the near future for this route. CTA's fault, not mine.");
-          } else {
-            $("#results").append("<h4>Bus Predictions</h4>" + "<p class='boldText'> Stop name: " + data["bustime-response"]["prd"][0].stpnm + "</p>" +
-              "<p class='boldText'>Route direction: " + data["bustime-response"]["prd"][0].rtdir + "</p>" + "<hr class='blueHr'>");
-            $.each(data["bustime-response"]["prd"], function(index, value) {
-              var prediction = value.prdctdn;
-              if (prediction !== "DLY" && prediction !== "DUE") {
-                minuteString = " MINUTES";
-                var predictionNum = prediction.toString();
-                var prediction = prediction.concat(minuteString);
+      db.stops.count().then(function(count) {
+        console.log(count);
+        if (count > 0) {
+          $("#noTrackers").remove();
+          var stopid1 = stops.name;
+          var rtnm1 = stops.rtnm;
+          var name1 = stops.stopid;
+          var rtdir = stops.rtdir;
+          var html4 = "<button class='mdl-button mdl-js-button mdl-button--raised mdl-button--colored raisedMargin centeredDiv1 addedBus' id=" +
+            stopid1 + ">" +
+            rtnm1 + " - " + name1 + " (" + rtdir + ")" +
+            "</button>";
+          $("#buttons").append(html4);
+          $("#" + stopid1).click(function() {
+            $("#results").empty();
+            var id = this.id;
+            var apiPassThruUrl = "https://polar-garden-75406.herokuapp.com/apiPassThru.php";
+            var apiEndpoint = "http://www.ctabustracker.com/bustime/api/v2/getpredictions";
+            $.ajax({
+              url: apiPassThruUrl,
+              dataType: "json",
+              method: 'GET',
+              data: {
+                "apiEndpoint": apiEndpoint,
+                "key": "YubEefJ33AeRRyxbmYBbgN2QH",
+                "format": "json",
+                "stpid": id
               }
-              var html = "<h6 class='boldText'>" + "Bus Arrival Time: " + prediction + "<h6>" +
-                "<hr>";
-              $("#results").append(html);
+            }).done(function(data) {
+              console.log(data);
+              if (data["bustime-response"]["error"] !== undefined) {
+                $("#results").append("Sorry, no information was found. There may be no buses scheduled in the near future for this route.");
+              }
+              else {
+                $("#results").append("<h4>Bus Predictions</h4>" + "<p class='boldText'> Stop name: " + data["bustime-response"]["prd"][0].stpnm + "</p>" +
+                  "<p class='boldText'>Route direction: " + data["bustime-response"]["prd"][0].rtdir + "</p>" + "<hr class='blueHr'>");
+                $.each(data["bustime-response"]["prd"], function(index, value) {
+                  var prediction = value.prdctdn;
+                  if (prediction !== "DLY" && prediction !== "DUE") {
+                    minuteString = " MINUTES";
+                    var predictionNum = prediction.toString();
+                    var prediction = prediction.concat(minuteString);
+                  }
+                  var html = "<h6 class='boldText'>" + "Bus Arrival Time: " + prediction + "<h6>" +
+                    "<hr>";
+                  $("#results").append(html);
+                });
+              }
             });
-          }
-        });
-      });
+          });
+        }
+      })
     }).catch("NotFoundError", function(error) {
       console.error(error);
     });
@@ -534,8 +558,9 @@
         }).done(function(data) {
           console.log(data);
           if (data["bustime-response"]["error"] !== undefined) {
-            $("#results").append("Sorry, no information was found. There may be no buses scheduled in the near future for this route. CTA's fault, not mine.");
-          } else {
+            $("#results").append("Sorry, no information was found. There may be no buses scheduled in the near future for this route.");
+          }
+          else {
             $("#results").append("<h4>Bus Predictions</h4>" + "<p class='boldText'> Stop name: " + data["bustime-response"]["prd"][0].stpnm + "</p>" +
               "<p class='boldText'>Route direction: " + data["bustime-response"]["prd"][0].rtdir + "</p>" + "<hr class='blueHr'>");
             $.each(data["bustime-response"]["prd"], function(index, value) {
@@ -572,8 +597,9 @@
         }).done(function(data) {
           console.log(data);
           if (data["bustime-response"]["error"] !== undefined) {
-            $("#results").append("Sorry, no information was found. There may be no buses scheduled in the near future for this route. CTA's fault, not mine.");
-          } else {
+            $("#results").append("Sorry, no information was found. There may be no buses scheduled in the near future for this route.");
+          }
+          else {
             $("#results").append("<h4>Bus Predictions</h4>" + "<p class='boldText'> Stop name: " + data["bustime-response"]["prd"][0].stpnm + "</p>" +
               "<p class='boldText'>Route direction: " + data["bustime-response"]["prd"][0].rtdir + "</p>" + "<hr class='blueHr'>");
             $.each(data["bustime-response"]["prd"], function(index, value) {
@@ -591,6 +617,7 @@
         });
       });
     });
-    </script>
+  </script>
 </body>
+
 </html>
