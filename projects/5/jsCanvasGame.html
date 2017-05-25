@@ -10,9 +10,21 @@
     </head>
     <body>
         <canvas id="myCanvas" class="canvas" height = "360px" width = "640px"></canvas>
+        <p>This is the 21 pilots logo.</p>
         <script>
             var canvas = document.querySelector("#myCanvas");
             var context = canvas.getContext("2d");
+            context.beginPath();
+            context.arc(200, 200, 50, 0, Math.PI * 2, true);
+            context.fillStyle = "black";
+            context.fill();
+            
+            context.lineWidth = 5;
+            context.strokeStyle = "black";
+            
+            context.stroke();
+            context.closePath();
+            
             context.beginPath();
             context.moveTo(375, 25);
             context.lineTo(625, 25);
