@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> JS Canvas Animation</title>
+        <style>
+            .canvas {
+                border: 5px solid #228B22;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="myCanvas" class="canvas" height = "360px" width = "640px"></canvas>
+        <script>
+            var canvas = document.querySelector("#myCanvas");
+            var context = canvas.getContext("2d");
+            context.beginPath();
+            context.moveTo(375, 25);
+            context.lineTo(625, 25);
+            context.lineTo(625, 275);
+            context.lineTo(375, 275);
+            context.lineTo(375, 25);
+            
+            context.lineWidth = 6;
+            context.strokeStyle = "black";
+            context.fillStyle = "black";
+            context.fill();
+            context.stroke();
+            context.closePath();
+
+            context.beginPath();
+            context.arc(500, 150, 100, 0, Math.PI * 2, true);
+            context.fillStyle = "black";
+            context.fill();
+            
+            context.lineWidth = 5;
+            context.strokeStyle = "white";
+            
+            context.stroke();
+            context.closePath();
+            
+            context.beginPath();
+            context.moveTo(470, 100);
+            context.lineTo(470, 200);
+            context.lineWidth = 6;
+            context.strokeStyle = "white";
+            context.stroke();
+            context.closePath();
+            
+            context.beginPath();
+            context.moveTo(485, 150);
+            context.lineTo(510, 150);
+            context.lineWidth = 6;
+            context.strokeStyle = "white";
+            context.stroke();
+            context.closePath();
+            
+            context.beginPath();
+            context.moveTo(517, 175);
+            context.lineTo(547, 110);
+            context.lineWidth = 6;
+            context.strokeStyle = "red";
+            context.stroke();
+            context.closePath();
+        </script>
+    </body>
+</html>
