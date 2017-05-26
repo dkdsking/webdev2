@@ -6,73 +6,82 @@
             .canvas {
                 border: 5px solid #228B22;
             }
+            #drawLogo {
+                border: 1px solid black;
+            }
         </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </head>
     <body>
         <canvas id="myCanvas" class="canvas" height = "360px" width = "640px"></canvas>
-        <p>This is the 21 pilots logo.</p>
+        <br><button id = "drawLogo">Draw</button>
+        <p>Click the button above to animate the 21 pilots logo.</p>
         <script>
             var canvas = document.querySelector("#myCanvas");
             var context = canvas.getContext("2d");
-            context.beginPath();
-            context.arc(200, 200, 50, 0, Math.PI * 2, true);
-            context.fillStyle = "black";
-            context.fill();
-            
-            context.lineWidth = 5;
-            context.strokeStyle = "black";
-            
-            context.stroke();
-            context.closePath();
-            
-            context.beginPath();
-            context.moveTo(375, 25);
-            context.lineTo(625, 25);
-            context.lineTo(625, 275);
-            context.lineTo(375, 275);
-            context.lineTo(375, 25);
-            
-            context.lineWidth = 6;
-            context.strokeStyle = "black";
-            context.fillStyle = "black";
-            context.fill();
-            context.stroke();
-            context.closePath();
-
-            context.beginPath();
-            context.arc(500, 150, 100, 0, Math.PI * 2, true);
-            context.fillStyle = "black";
-            context.fill();
-            
-            context.lineWidth = 5;
-            context.strokeStyle = "white";
-            
-            context.stroke();
-            context.closePath();
-            
-            context.beginPath();
-            context.moveTo(470, 100);
-            context.lineTo(470, 200);
-            context.lineWidth = 6;
-            context.strokeStyle = "white";
-            context.stroke();
-            context.closePath();
-            
-            context.beginPath();
-            context.moveTo(485, 150);
-            context.lineTo(510, 150);
-            context.lineWidth = 6;
-            context.strokeStyle = "white";
-            context.stroke();
-            context.closePath();
-            
-            context.beginPath();
-            context.moveTo(517, 175);
-            context.lineTo(547, 110);
-            context.lineWidth = 6;
-            context.strokeStyle = "red";
-            context.stroke();
-            context.closePath();
+            var x=0;
+            var y=0;
+            function draw(){
+                if (x==200 || y==200) {
+                    
+                } else {
+                    context.clearRect(0,0,myCanvas.width,myCanvas.height);
+                    context.beginPath();
+                    context.moveTo(375 - x, 225-y);
+                    context.lineTo(625- x, 225-y);
+                    context.lineTo(625- x, 475-y);
+                    context.lineTo(375- x, 475-y);
+                    context.lineTo(375- x, 225-y);
+                   
+                    context.lineWidth = 6;
+                    context.strokeStyle = "black";
+                    context.fillStyle = "black";
+                    context.fill();
+                    context.stroke();
+                    context.closePath();
+                    
+                    context.beginPath();
+                    context.arc(100+x, -50+y, 100, 0, Math.PI * 2, true);
+                    context.fillStyle = "black";
+                    context.fill();
+                    
+                    context.lineWidth = 5;
+                    context.strokeStyle = "white";
+                    
+                    context.stroke();
+                    context.closePath();
+                    
+                    context.beginPath();
+                    context.moveTo(70+x, 300-y);
+                    context.lineTo(70+x, 400-y);
+                    context.lineWidth = 6;
+                    context.strokeStyle = "white";
+                    context.stroke();
+                    context.closePath();
+                    
+                    context.beginPath();
+                    context.moveTo(85+x, 350-y);
+                    context.lineTo(110+x, 350-y);
+                    context.lineWidth = 6;
+                    context.strokeStyle = "white";
+                    context.stroke();
+                    context.closePath();
+                    
+                    context.beginPath();
+                    context.moveTo(517-x, -25+y);
+                    context.lineTo(547-x, -90+y);
+                    context.lineWidth = 6;
+                    context.strokeStyle = "red";
+                    context.stroke();
+                    context.closePath();
+                    
+                    x+=1;
+                    y+=1;
+                }
+            };
+            $("#drawLogo").click(function() {
+                setInterval(draw, 5);
+            });
         </script>
     </body>
 </html>
