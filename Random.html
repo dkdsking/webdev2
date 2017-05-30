@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> </title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </head>
+    <body>
+    <button id="random">Generate number</button>
+    <p>Numbers: </p>
+    <script>
+    $("#random").click(function() {
+        var randomNum = Math.random() * 20;
+        $("body").append("<p>"+randomNum+"<p>");
+    })
+    </script>
+    </body>
+</html>
